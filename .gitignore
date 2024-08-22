@@ -1,0 +1,14 @@
+.vscode
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+*.log
+
+target/
+.idea
+*.iml
+*.DS_Store
+~           
