@@ -90,7 +90,19 @@ if __name__ == '__main__':
 
 > 知道数组长度之后，可以转换为$top\_K$问题
 
-- 两个有序数组的中位数
+- [4. 寻找两个正序数组的中位数](https://leetcode.cn/problems/median-of-two-sorted-arrays/)
+
+> 给定两个大小分别为 `m` 和 `n` 的正序（从小到大）数组 `nums1` 和 `nums2`。请你找出并返回这两个正序数组的 **中位数** 。
+> 
+> 算法的时间复杂度应该为 `O(log (m+n))` 。
+
+```bash
+示例 1：
+
+输入：nums1 = [1,3], nums2 = [2]
+输出：2.00000
+解释：合并数组 = [1,2,3] ，中位数 2
+```
 
 ```py
 class Solution:
@@ -126,17 +138,48 @@ class Solution:
                 min(nums1_right_min, nums2_right_min)) / 2
 ```
 
-- 数据流的中位数
+- [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/)
+
+> **中位数**是有序整数列表中的中间值。如果列表的大小是偶数，则没有中间值，中位数是两个中间值的平均值。
+> 
+> - 例如 `arr = [2,3,4]` 的中位数是 `3` 。
+> - 例如 `arr = [2,3]` 的中位数是 `(2 + 3) / 2 = 2.5` 。
+> 
+> 实现 MedianFinder 类:
+> 
+> - `MedianFinder()` 初始化 `MedianFinder` 对象。
+> 
+> - `void addNum(int num)` 将数据流中的整数 `num` 添加到数据结构中。
+> 
+> - `double findMedian()` 返回到目前为止所有元素的中位数。与实际答案相差 `10-5` 以内的答案将被接受。
+
+```bash
+示例 1：
+
+输入
+["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
+[[], [1], [2], [], [3], []]
+输出
+[null, null, null, 1.5, null, 2.0]
+
+解释
+MedianFinder medianFinder = new MedianFinder();
+medianFinder.addNum(1);    // arr = [1]
+medianFinder.addNum(2);    // arr = [1, 2]
+medianFinder.findMedian(); // 返回 1.5 ((1 + 2) / 2)
+medianFinder.addNum(3);    // arr[1, 2, 3]
+medianFinder.findMedian(); // return 2.0
+```
 
 ```py
 import heapq
 
 class MedianFinder:
     def __init__(self):
-        self.small = []  # 大顶堆（用负值实现的小顶堆）
+        self.small = []  # 大顶堆（用负值实现）
         self.large = []  # 小顶堆
 
-    def add_num(self, num):
+    def addNum(self, num):
         # 将新元素插入大顶堆，然后把大顶堆的堆顶元素移动到小顶堆
         heapq.heappush(self.small, -num)
         heapq.heappush(self.large, -heapq.heappop(self.small))
@@ -145,7 +188,7 @@ class MedianFinder:
         if len(self.small) < len(self.large):
             heapq.heappush(self.small, -heapq.heappop(self.large))
 
-    def find_median(self):
+    def findMedian(self):
         if len(self.small) > len(self.large):
             return -self.small[0]
         else:
@@ -156,6 +199,6 @@ finder = MedianFinder()
 nums = [7, 1, 3, 4, 9, 2]
 
 for num in nums:
-    finder.add_num(num)
+    finder.addNum(num)
     print(f"Current median: {finder.find_median()}")
 ```
