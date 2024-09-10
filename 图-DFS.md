@@ -282,7 +282,7 @@ class Solution:
 
 > **示例 1：**
 > 
-> **输入：**board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+> 输入：board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
 > 
 > **输出：**[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
 > 
@@ -292,7 +292,9 @@ class Solution:
 > 
 > 在上图中，底部的区域没有被捕获，因为它在 board 的边缘并且不能被围绕。
 
-> 这类问题都需要原地替换，即空间复杂度为O(1). 一般都是用一个不冲突的字符串先占位，然后再改为符合题意的字符串
+**提示：**
+
+> 这类问题都需要原地替换，即空间复杂度为O(1). 一般都是用一个不冲突的字符先占位，然后再改为符合题意的字符。
 
 ```py
 class Solution:
@@ -311,7 +313,7 @@ class Solution:
 
 
         # 处理边缘的'O'
-        # 把不能替换成'X'的'0'先用'V'占位
+        # 把不能替换成'X'的''先用'V'占位
         for i in range(m):
             for j in [0, n - 1]:
                 if board[i][j] == 'O':
@@ -320,7 +322,7 @@ class Solution:
             for j in range(n):
                 if board[i][j] == 'O':
                     dfs(i, j)
-    
+
         for i, j in product(range(m), range(n)):
             # V -> O; O -> X 
             board[i][j] = 'O' if board[i][j] == 'V' else 'X'
