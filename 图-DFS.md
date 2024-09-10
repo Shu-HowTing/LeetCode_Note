@@ -269,3 +269,59 @@ class Solution:
         #     return  0
         return result
 ```
+
+- [130. 被围绕的区域](https://leetcode.cn/problems/surrounded-regions/)
+
+> 给你一个 `m x n` 的矩阵 `board` ，由若干字符 `'X'` 和 `'O'` 组成，**捕获** 所有 **被围绕的区域**：
+> 
+> - **连接：**一个单元格与水平或垂直方向上相邻的单元格连接。
+> - **区域：连接所有** `'O'` 的单元格来形成一个区域。
+> - **围绕：**如果您可以用 `'X'` 单元格 **连接这个区域**，并且区域中没有任何单元格位于 `board` 边缘，则该区域被 `'X'` 单元格围绕。
+> 
+> 通过将输入矩阵 `board` 中的所有 `'O'` 替换为 `'X'` 来 **捕获被围绕的区域**。
+
+> **示例 1：**
+> 
+> **输入：**board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+> 
+> **输出：**[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+> 
+> **解释：**
+> 
+> ![](https://pic.leetcode.cn/1718167191-XNjUTG-image.png)
+> 
+> 在上图中，底部的区域没有被捕获，因为它在 board 的边缘并且不能被围绕。
+
+> 这类问题都需要原地替换，即空间复杂度为O(1). 一般都是用一个不冲突的字符串先占位，然后再改为符合题意的字符串
+
+```py
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        m, n = len(board), len(board[0])
+        def dfs(x: int, y: int):
+            if x in [-1, m] or y in [-1, n] or board[x][y] != 'O':
+                return
+            board[x][y] = 'V' # visited
+            for dx, dy in directions:
+                dfs(x + dx, y + dy)
+
+
+        # 处理边缘的'O'
+        # 把不能替换成'X'的'0'先用'V'占位
+        for i in range(m):
+            for j in [0, n - 1]:
+                if board[i][j] == 'O':
+                    dfs(i, j)
+        for i in [0, m - 1]:
+            for j in range(n):
+                if board[i][j] == 'O':
+                    dfs(i, j)
+    
+        for i, j in product(range(m), range(n)):
+            # V -> O; O -> X 
+            board[i][j] = 'O' if board[i][j] == 'V' else 'X'
+```
