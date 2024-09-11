@@ -65,22 +65,7 @@ class Solution:
 ```
 
 ```py
-class Solution:
-    def longestPalindromeSubseq(self, s: str) -> int:
-        # dp[i][j]: 字符串s[i:j]中的最长回文子串的长度
-        n = len(s)
-        dp = [[0] * n for i in range(n)]
-        for i in range(n):
-            dp[i][i] = 1
-        # for i in range(n-1, -1, -1):
-        #     for j in range(i+1, n):
-        for j in range(n):  # end
-            for i in range(j-1, -1, -1): # start
-                if s[i] == s[j]:
-                    dp[i][j] = dp[i+1][j-1] + 2
-                else:
-                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
-        return dp[0][-1]
+
 ```
 
 - [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/)
